@@ -7,6 +7,9 @@ const productSeed = require("./models/seed");
 app.use(express.urlencoded({ extended: true }));
 require("dotenv").config();
 
+const methodOverride = require("method-override");
+app.use(methodOverride("_method"));
+
 mongoose.connect(process.env.DATABASE_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -19,6 +22,13 @@ db.on("disconnected", () => console.log("mongo disconnected"));
 
 
 // seed data
+app.get("/products", (req, res) => {
+  Product.find({}, (error, allProducts) => {
+    res.render("index.ejs", {
+      products: allProducts,
+    });
+  });
+});
 app.get("/products/seed", (req, res) => {
   Product.deleteMany({}, (error, allProducts) => {});
 
@@ -35,13 +45,7 @@ app.post("/products", (req, res) => {
   });
 });
 
-app.get("/products", (req, res) => {
-  Product.find({}, (error, allProducts) => {
-    res.render("index.ejs", {
-      products: allProducts,
-    });
-  });
-});
+
 
 // new
 app.get("/products/new", (req, res) => {
@@ -55,7 +59,25 @@ app.get("/products/:id", (req, res) => {
     });
   });
 });
+// delete
+app.delete("/products/:id", (req, res) => {
+  Product.findByIdAndDelete(req.params.id, (error, deletedProducts) => {
+    // res.send({ success: true });
+    res.redirect('/products')
+  });
+});
 
+// update
+// app.put("/products/:id", (req, res) => {
+//   Product.findByIdAndUpdate(
+//     req.params.id,
+//     req.body,
+//     { new: true },
+//     (error, updateProduct) => {
+//       res.send(updateProduct);
+//     }
+//   );
+// });
 
 
 
