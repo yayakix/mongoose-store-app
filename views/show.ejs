@@ -13,14 +13,17 @@
 		</nav>
 		<h1><%=product.name %></h1>
 		name: <%= product.description%>
-        <img src="<%= product.img%>" alt="">
+        <img src="<%= product.img %>" alt="">
         <br>
         price: <%= product.price%>
         <br>
         quantity: 
-        <%= product.qty%>
+ <%= product.qty %>
+               
+        
+        <a href="/products/<%=product._id %>/buy"><button>BUY</button></a>
+      
+  
 		<br />
-		       <a href="/products"><button>buy</button> </a>
-
 	</body>
 </html>

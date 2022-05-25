@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const Product = require('./models/products')
 const productSeed = require("./models/seed");
 
+
 app.use(express.urlencoded({ extended: true }));
 require("dotenv").config();
 
@@ -51,6 +52,16 @@ app.post("/products", (req, res) => {
 app.get("/products/new", (req, res) => {
   res.render("new.ejs");
 });
+// edit
+
+// Edit
+app.get("/products/:id/edit", (req, res) => {
+  Product.findById(req.params.id, (error, foundProduct) => {
+    res.render("edit.ejs", {
+      product: foundProduct,
+    });
+  })
+})
 // show
 app.get("/products/:id", (req, res) => {
   Product.findById(req.params.id, (err, foundProduct) => {
@@ -59,6 +70,7 @@ app.get("/products/:id", (req, res) => {
     });
   });
 });
+
 // delete
 app.delete("/products/:id", (req, res) => {
   Product.findByIdAndDelete(req.params.id, (error, deletedProducts) => {
@@ -68,18 +80,25 @@ app.delete("/products/:id", (req, res) => {
 });
 
 // update
-// app.put("/products/:id", (req, res) => {
-//   Product.findByIdAndUpdate(
-//     req.params.id,
-//     req.body,
-//     { new: true },
-//     (error, updateProduct) => {
-//       res.send(updateProduct);
-//     }
-//   );
-// });
+app.put("/products/:id", (req, res) => {
+  Product.findByIdAndUpdate(
+    req.params.id,
+    req.body,
+    { new: true },
+    (error, updateProduct) => {
+      res.redirect('/products');
+    }
+  );
+});
+
+app.get("/products/:id/buy"), (req, res) => {
+
+};
 
 
+function decreaseQty(amount){
+return amount--
+}
 
 const PORT = process.env.PORT;
 app.listen(PORT, () => console.log(`server is listning on port: ${PORT}`));
