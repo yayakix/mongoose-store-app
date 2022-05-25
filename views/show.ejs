@@ -21,8 +21,11 @@
  <%= product.qty %>
                
         
-        <a href="/products/<%=product._id %>/buy"><button>BUY</button></a>
-      
+<form action="/products/<%=product._id%>/buy" method="POST">
+
+<input type="submit" value="buy">
+
+</form>      
   
 		<br />
 	</body>

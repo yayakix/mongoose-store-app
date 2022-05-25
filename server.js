@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-const Product = require('./models/products')
+const Product = require('./models/product')
 const productSeed = require("./models/seed");
 
 
@@ -9,6 +9,7 @@ app.use(express.urlencoded({ extended: true }));
 require("dotenv").config();
 
 const methodOverride = require("method-override");
+const e = require("express");
 app.use(methodOverride("_method"));
 
 mongoose.connect(process.env.DATABASE_URL, {
@@ -22,7 +23,7 @@ db.on("connected", () => console.log("mongo connected"));
 db.on("disconnected", () => console.log("mongo disconnected"));
 
 
-// seed data
+
 app.get("/products", (req, res) => {
   Product.find({}, (error, allProducts) => {
     res.render("index.ejs", {
@@ -30,6 +31,8 @@ app.get("/products", (req, res) => {
     });
   });
 });
+
+// seed data
 app.get("/products/seed", (req, res) => {
   Product.deleteMany({}, (error, allProducts) => {});
 
@@ -65,8 +68,11 @@ app.get("/products/:id/edit", (req, res) => {
 // show
 app.get("/products/:id", (req, res) => {
   Product.findById(req.params.id, (err, foundProduct) => {
+      let num = Number(foundProduct.qty)
+    //   num +=1
     res.render("show.ejs", {
       product: foundProduct,
+      amount: num,
     });
   });
 });
@@ -90,10 +96,19 @@ app.put("/products/:id", (req, res) => {
     }
   );
 });
-
-app.get("/products/:id/buy"), (req, res) => {
-
-};
+// quantity
+app.post("/products/:id/buy", (req, res) => {
+  Product.findById(req.params.id, (err, data) => {
+      if(data.qty <= 0){
+data.qty = "out of stonk"
+      }else{
+ data.qty--;
+ data.save();
+      }
+   
+    res.redirect(`/products/${data.id}`);
+  });
+});
 
 
 function decreaseQty(amount){
