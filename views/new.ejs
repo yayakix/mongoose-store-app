@@ -1,13 +1,6 @@
+<%- include('header') -%>
 
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Products List</title>
-	</head>
-	<body>
+
 		<h1>New Book Page</h1>
 		<form action="/products" method="POST">
 			name: <input type="text" name="name" /><br />
@@ -15,7 +8,4 @@
 			
 			<input type="submit" name="" value="Add Product" />
 		</form>
-	</body>
-	</body>
-</html>
-
+<%- include('footer') -%>

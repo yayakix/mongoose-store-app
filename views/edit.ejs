@@ -1,3 +1,5 @@
+<%- include('header') -%>
+<a href="/products">Back to products Index</a>
 
 <form action="/products/<%=product._id%>?_method=PUT" method="POST">
 
@@ -21,3 +23,5 @@
 <br>
 
 </form>
+
+<%- include('footer') -%>

@@ -10,7 +10,7 @@ module.exports = [
         description: 'Its just a bag of bones.',
         img: 'https://imgur.com/dalOqwk.png',
         price: 25,
-        qty: 0
+        qty: 2
       }, {
         name: 'Bins',
         description: 'A stack of colorful bins for your beans and bones.',

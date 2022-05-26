@@ -1,20 +1,15 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="utf-8" />
-		<title></title>
-	</head>
-	<body>
+<%- include('header') -%>
 
 <nav>
 	<a href="/products/new">Add a product</a>
 </nav>
-		<h1>Products index page</h1>
+<div id="index">
+<h1 id="title">Dark Market</h1>
 		<ul>
 			<% products.forEach(product => { %>
 			
 <li>
-	<a href="/products/<%=product._id %>"> <%=product.name; %> </a>
+	<a href="/products/<%=product._id %>"> <h2 id="index-name"><%=product.name; %></h2>  </a>
    
 </li>
 <a href="/products/<%=product._id %>">  <img src="<%=product.img %> " alt=""></a>
@@ -27,5 +22,6 @@
 </form></td>
 			<% }) %>
 		</ul>
-	</body>
-</html>
+</div>
+		
+<%- include('footer') -%>
